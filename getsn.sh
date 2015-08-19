@@ -3,7 +3,7 @@
 # Downloaded Security Now! files
 SNDIR="$HOME/Music/iTunes/iTunes Music/Music/Steve Gibson/Security Now!"
 
-echo "Finding next episode to downloaded"
+echo "Finding next episode to download"
 
 # Latest episode not downloaded
 SHOWNUM=$(( `ls "$SNDIR" | sort -n | tail -n 1 | egrep -o '^[0-9]+'` + 1 ))

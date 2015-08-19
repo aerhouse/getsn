@@ -1,19 +1,21 @@
 #!/bin/bash
 
-echo "Finding last downloaded episode"
-
 # Downloaded Security Now! files
 SNDIR="$HOME/Music/iTunes/iTunes Music/Music/Steve Gibson/Security Now!"
-# Directory for files to be automatically added to iTunes
-ITUNES="$HOME/Music/iTunes/iTunes Music/Automatically Add to iTunes"
+
+echo "Finding next episode to downloaded"
+
 # Latest episode not downloaded
 SHOWNUM=$(( `ls "$SNDIR" | sort -n | tail -n 1 | egrep -o '^[0-9]+'` + 1 ))
 SHOWFILE=`printf sn%04d.mp3 $SHOWNUM`
 
-echo "Downloading next episode: $SHOWNUM"
+echo "Checking for episode $SHOWNUM"
 
 if curl -f `printf http://twit.cachefly.net/audio/sn/sn%04d/sn%04d.mp3 $SHOWNUM $SHOWNUM` -o "$HOME/$SHOWFILE"
-then 
+then
+    # Directory for files to be automatically added to iTunes
+    ITUNES="$HOME/Music/iTunes/iTunes Music/Automatically Add to iTunes"
+
     cd $HOME
     
     TITLE=`id3v2 --list $SHOWFILE | grep "TIT2" | grep -o "): .*" | sed 's|): ||'`
